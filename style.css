@@ -1,0 +1,594 @@
+/**
+  Нормализация блочной модели
+ */
+ 
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+/**
+  Убираем внутренние отступы слева тегам списков,
+  у которых есть атрибут class
+ */
+:where(ul, ol):where([class]) {
+  padding-left: 0;
+}
+
+/**
+  Убираем внешние отступы body и двум другим тегам,
+  у которых есть атрибут class
+ */
+body,
+:where(blockquote, figure):where([class]) {
+  margin: 0;
+}
+
+/**
+  Убираем внешние отступы вертикали нужным тегам,
+  у которых есть атрибут class
+ */
+:where(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ul,
+  ol,
+  dl
+):where([class]) {
+  margin-block: 0;
+}
+
+:where(dd[class]) {
+  margin-left: 0;
+}
+
+:where(fieldset[class]) {
+  margin-left: 0;
+  padding: 0;
+  border: none;
+}
+
+/**
+  Убираем стандартный маркер маркированному списку,
+  у которого есть атрибут class
+ */
+:where(ul[class]) {
+  list-style: none;
+}
+
+:where(address[class]) {
+  font-style: normal;
+}
+
+/**
+  Обнуляем вертикальные внешние отступы параграфа,
+  объявляем локальную переменную для внешнего отступа вниз,
+  чтобы избежать взаимодействие с более сложным селектором
+ */
+p {
+  --paragraphMarginBottom: 24px;
+
+  margin-block: 0;
+}
+
+/**
+  Внешний отступ вниз для параграфа без атрибута class,
+  который расположен не последним среди своих соседних элементов
+ */
+p:where(:not([class]):not(:last-child)) {
+  margin-bottom: var(--paragraphMarginBottom);
+}
+
+
+/**
+  Упрощаем работу с изображениями
+ */
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/**
+  Наследуем свойства шрифт для полей ввода
+ */
+input,
+textarea,
+select,
+button {
+  font: inherit;
+}
+
+html {
+  /**
+    Пригодится в большинстве ситуаций
+    (когда, например, нужно будет "прижать" футер к низу сайта)
+   */
+  height: 100%;
+}
+
+/**
+  Плавный скролл
+ */
+html,
+:has(:target) {
+  scroll-behavior: smooth;
+}
+
+body::-webkit-scrollbar{
+  width: 0;
+}
+
+body {
+  /**
+    Пригодится в большинстве ситуаций
+    (когда, например, нужно будет "прижать" футер к низу сайта)
+   */
+  min-height: 100%;
+  /**
+    Унифицированный интерлиньяж
+   */
+  line-height: 1.5;
+}
+
+/**
+  Приводим к единому цвету svg-элементы
+ */
+svg *[fill] { fill: currentColor }
+svg *[stroke] { stroke: currentColor }
+
+/**
+  Чиним баг задержки смены цвета при взаимодействии с svg-элементами
+ */
+svg * {
+  transition-property: fill, stroke;
+}
+
+/**
+  Удаляем все анимации и переходы для людей,
+  которые предпочитают их не использовать
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html,body{
+  overflow-x: hidden;
+}
+
+.navbar{
+  min-width: 100vw;
+  height: 70px;
+}
+
+.navbar .container{
+   width: 100vw;
+   align-items: center;
+   height: inherit;
+   display: flex;
+}
+
+
+.logo{
+  margin-left: 50px;
+  width: 49px;
+  height: 40px;
+  background-color: black;
+}
+
+.topmenu{
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.topmenu li {
+  display: inline-block;
+  font-size: 13px;
+  text-transform: uppercase;
+  color: #ffffff;
+  font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.topmenu a {
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+  color:#ffffff
+}
+
+.topmenu li a {
+  padding: 10px;
+}
+
+.navbar-wrap{
+  display: flex;
+  flex-flow: row nowrap;
+  flex-wrap: wrap;
+}
+
+.container {
+  background-color: black;
+}
+
+.container-icon img{
+  max-width: 992px;
+  left: 200px;
+  position: relative;
+  left: 150vh;
+  padding: 20px;
+}
+
+.image-container{
+  position: relative;
+  max-width: 1300px;
+  text-align: center;
+}
+
+.image-container img{
+  width: 100vw;
+  min-width: 100vw;
+  height: 600px;
+}
+
+.text-overlay {
+  position: absolute;
+  top: 47%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 80px;
+  text-transform: uppercase;
+  color: #ffffff;
+  font-family: "Oswald";
+  font-weight: bold;
+}
+
+.below-button{
+  position: absolute;
+  top: 75%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  text-align: center;
+  width: 149px;
+  height: 50px;
+  background-color: #000000;
+  color: white;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #ffffff;
+  font-family: "Oswald";
+  border: none;
+  cursor: pointer;
+}
+.card__text h1{
+  font-size: 48px;
+  text-transform: uppercase;
+  color: #000000;
+  font-weight: 300;
+  font-family: "Oswald";
+  text-align: center;
+  padding-top: 30px;
+}
+
+.card__text h2{
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #000000;
+  font-family: "Oswald";
+  text-align: center;
+  font-weight: 300;
+}
+
+.texth2{
+  position: relative;
+  bottom: 30px;
+}
+
+.cross{
+  margin-left: 49%;
+  width: 1em;
+  height: 2em;
+  text-align: center;
+  background-color: Black;
+  clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
+}
+
+.shop-card{
+  display: flex;
+  justify-content: center;
+}
+
+.shop-card .shop-card__images {
+  width: 100%;
+  display: flex;
+  grid-template-columns: auto auto auto auto auto;
+  grid-gap: 150px;
+  padding: 10px;
+}
+
+.shop-card .shop-card__images img{
+  margin-top: 70px;
+  width: 100%;
+  height: 100%;
+}
+
+.shop-card__text h2{
+  font-size: 24px;
+  text-transform: uppercase;
+  color: #000000;
+  font-weight: bold;
+  font-family: "Oswald";
+  text-align: center;
+  margin-top: 80px;
+}
+.fon-info__block{
+  width: 100vw;
+  min-width: 100vw;
+  width: 1263px;
+  height: 800px;
+  background-color: Gray;
+  background-image: url(./img/snapedit_1727529249643.png);
+  margin-top: 150px;
+  background-size: cover;
+}
+
+.fon-info__overlay{
+  position: relative;
+  top: 10%;
+  margin-left: 15%;
+  font-size: 48px;
+  text-transform: uppercase;
+  color: #ffffff;
+  font-family: "Oswald";
+}
+
+.fon-info__overlay2{
+   position: relative;
+   top: 15%;
+   margin-left: 15%;
+   width: 600px; 
+   height: 397px;
+   font-weight: 400;
+   font-size: 15px;
+   line-height: 30px;
+   color: #ffffff;
+   font-family: "Oswald";
+}
+
+.gallery-text h1{
+  margin-top: 100px;
+  font-size: 48px;
+  text-transform: uppercase;
+  color: #000000;
+  font-family: "Oswald";
+  text-align: center;
+}
+
+.cross-2{
+  margin-left: 49%;
+  width: 1em;
+  height: 2em;
+  text-align: center;
+  background-color: Black;
+  clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
+}
+
+.gallery-container{
+  display: flex;
+  justify-content: center;
+}
+
+.gallery-container .gallery-container-images{
+  display: flex;
+  grid-template-columns: auto auto auto auto;
+  padding: 10px;
+}
+.gallery-container-images div{
+  position: relative;
+  top: 40px;
+  margin: 20px;
+  width: 220px;
+  height: 160px;
+  background-color: #9c9696;
+}
+
+.gallery-container-images div:first-child{
+  background-image: url(./img/img\ 1.png);
+}
+
+.gallery-container-images div:nth-last-child(3){
+  background-image: url(./img/img\ 2.png);
+}
+
+.gallery-container-images div:nth-last-child(2){
+  background-image: url(./img/img\ 3.png);
+}
+
+.gallery-container-images div:nth-last-child(1){
+  background-image: url(./img/img\ 4.png);
+}
+
+.gallery-text-2{
+  display: flex;
+  justify-content: center;
+}
+
+.gallery-text-2 .gallery-text-texts{
+  display: flex;
+  grid-template-columns: auto auto auto auto;
+  gap: 40px;
+  padding: 10px;
+}
+
+.gallery-text-texts h3{
+  width: 221px;
+  height: 150px;
+  font-size: 16px;
+  line-height: 30px;
+  color: #000000;
+  font-weight: 400;
+  font-family: "Oswald";
+}
+
+.footer{
+  width: 100vw;
+  min-width: 100vw;
+  display: flex;
+  justify-content: center;
+  width: 1263px;
+  height: 315px;
+  background-color: #000000;
+}
+
+.footer .footer-container{
+  display: flex;
+  grid-template-columns: auto auto auto auto;
+  gap: 40px;
+  padding: 10px;
+}
+
+.footer-container h4{
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 30px;
+  text-transform: uppercase;
+  color: #ffffff;
+  font-family: "Oswald";
+}
+
+.footer-container li a{
+  position: relative;
+  right: 40px;
+  font-size: 15px;
+  line-height: 30px;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: #e0e0e0;
+  font-family: "Oswald";
+  list-style-type: none;
+  text-decoration: 0;
+  padding: 0;
+}
+
+.footer-container .social-links a img{
+  margin-top: 40px;
+}
+
+@media(min-width: 1200px){
+
+}
+
+@media(max-width: 992px){
+  .footer-container{
+    margin-right: 50vw;
+  }
+
+  .gallery-container-images{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .gallery-container-images div{
+    max-width: 50%;
+  }
+
+  .gallery-container-images div:nth-child(3){
+    margin-top: 20px;
+  }
+
+  .gallery-container-images div:nth-child(4){
+    margin-top: 50px;
+  }
+  
+  h3:first-child{
+    position: relative;
+   left: 20vw;
+   bottom: 31vw;
+  }
+
+  h3:nth-child(2){
+    position: relative;
+    left: 20vw;
+  }
+
+  h3:nth-child(3){
+    position: relative;
+     left: 20vw;
+     bottom: 31vw;
+  }
+
+  h3:last-child{
+    position: relative;
+    right: 45vw;
+    bottom: 31vw;
+  }
+
+}
+
+
+@media(max-width: 768px){
+  .footer-container{
+    margin-right: 50vw;
+  }
+
+  .gallery-container-images{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .gallery-container-images div{
+    max-width: 50%;
+  }
+
+  .gallery-container-images div:nth-child(3){
+    margin-top: 50px;
+  }
+
+  .gallery-container-images div:nth-child(4){
+    margin-top: 50px;
+  }
+  
+  h3:first-child{
+    position: relative;
+   left: 35vw;
+   bottom: 31vw;
+  }
+
+  h3:nth-child(2){
+    position: relative;
+   
+  }
+
+  h3:nth-child(3){
+    position: relative;
+  
+  }
+
+  h3:last-child{
+    position: relative;
+    right: 33vw;
+    bottom: 31vw;
+  }
+
+}
